@@ -3,9 +3,8 @@ package repl
 import (
     "bufio"
     "fmt"
-    "io"
+    "io" 
     "while/lexer"
-    // "while/token"
     "while/parser"
 )
 
@@ -33,7 +32,7 @@ func Start(in io.Reader, out io.Writer) {
             fmt.Println(statement) 
         }
 
-        /*
+        /* -- If you want to see each individual token
         for tok := l.NextToken(); tok.Type != token.EOF; tok = l.NextToken() {
             fmt.Printf("%+v\n", tok)
         }
