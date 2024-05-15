@@ -44,6 +44,12 @@ type IfExpression struct {
 	Alternative *BlockStatement
 }
 
+type WhileExpression struct {
+	Token       token.Token // The 'while' token
+	Condition   Expression
+	Consequence *BlockStatement
+}
+
 type BlockStatement struct {
 	Token      token.Token
 	Statements []Statement
@@ -132,6 +138,18 @@ func (ie *IfExpression) String() string {
 		out.WriteString("else ")
 		out.WriteString(ie.Alternative.String())
 	}
+
+	return out.String()
+}
+
+func (ie *WhileExpression) expressionNode()      {}
+func (ie *WhileExpression) TokenLiteral() string { return ie.Token.Literal }
+func (ie *WhileExpression) String() string {
+	var out bytes.Buffer
+	out.WriteString("while")
+	out.WriteString(ie.Condition.String())
+	out.WriteString(" ")
+	out.WriteString(ie.Consequence.String())
 
 	return out.String()
 }

@@ -5,7 +5,8 @@ import (
     "fmt"
     "io"
     "while/lexer"
-    "while/token"
+    // "while/token"
+    "while/parser"
 )
 
 const PROMPT = ">> "
@@ -24,9 +25,18 @@ func Start(in io.Reader, out io.Writer) {
         line := scanner.Text()
 
         l := lexer.New(line)
+        p := parser.New(l)
 
+        statements := p.ParseProgram()
+
+        for _, statement := range statements.Statements {
+            fmt.Println(statement) 
+        }
+
+        /*
         for tok := l.NextToken(); tok.Type != token.EOF; tok = l.NextToken() {
             fmt.Printf("%+v\n", tok)
         }
+        */
     }
 }
