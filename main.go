@@ -7,7 +7,14 @@ import (
     "while/repl"
 )
 
-// TODO: Use Start() function from repl (maybe we wont use a repl)
 func main() {
-    fmt.Printf("Hello World!")
-}
+    user, err := user.Current()
+    if err != nil {
+        panic(err)
+    }
+
+    fmt.Printf("Hello %s! This is the monkey programming language!\n",
+        user.Username)
+    fmt.Printf("Feel free to type in commands\n")
+    repl.Start(os.Stdin, os.Stdout)
+} 
