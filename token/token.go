@@ -7,8 +7,8 @@ type Token struct {
     Literal string
 }
 
-const (
-    ILLEGAL = "ILLEGAL"
+const ( 
+    ILLEGAL = "ILLEGAL" 
     EOF     = "EOF"
 
     // Identifiers + Literals
@@ -20,44 +20,36 @@ const (
     PLUS     = "+"
     MINUS    = "-"
     ASTERISK = "*" 
-    BANG     = "!"
 
     LT = "<"
-    GT = ">"
 
     // Delimiters
-    COMMA = ","
     SEMICOLON = ";"
 
     LBRACE = "{"
     RBRACE = "}"
 
     EQ     = "=="
-    NOT_EQ = "NOT"
 
+    NOT = "NOT"
     AND = "AND"
     OR  = "OR"
-
-    AMPERSAND = "&&"
-    BAR       = "||"
-    BANG_EQ   = "!="
-
-    // -- Might not need the parentheses --
-    LPAREN = "("
-    RPAREN = ")"
 
     IF    = "IF"
     ELSE  = "ELSE"
     WHILE = "WHILE"
     FOR   = "FOR"
+
+    TRUE  = "TRUE"
+    FALSE = "FALSE"
 )
 
-// Every other toekn is the same in both languages
+// Every other token is the same in both languages
 var whileToGoTokens = map[TokenType]TokenType{
     WHILE:  FOR,
-    AND:    AMPERSAND,
-    OR:     BAR,
-    NOT_EQ: BANG_EQ, 
+    AND:    AND,
+    OR:     OR,
+    NOT:    NOT, 
 }
 
 var keywords = map[string]TokenType{
@@ -66,8 +58,10 @@ var keywords = map[string]TokenType{
     "else":   ELSE,
     "or":     OR,
     "and":    AND,
-    "not":    NOT_EQ,
+    "not":    NOT,
     "for":    FOR,
+    "true":   TRUE,
+    "false":  FALSE,
 }
 
 func LookupIdent(ident string) TokenType {

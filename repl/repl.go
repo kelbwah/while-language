@@ -6,6 +6,7 @@ import (
     "io" 
     "while/lexer"
     "while/parser"
+    "while/evaluator"
 )
 
 const PROMPT = ">> "
@@ -30,20 +31,12 @@ func Start(in io.Reader, out io.Writer) {
             printParserErrors(out, p.Errors())
             continue
         }
-        
-        io.WriteString(out, program.String())
-        io.WriteString(out, "\n")
 
-        /*
-        for _, statement := range program.Statements {
-            fmt.Println(statement) 
+        evaluated := evaluator.Eval(program)
+        if evaluated != nil {
+            io.WriteString(out, evaluated.Inspect())
+            io.WriteString(out, "\n")
         }
-
-        - If you want to see each individual token
-        for tok := l.NextToken(); tok.Type != token.EOF; tok = l.NextToken() {
-            fmt.Printf("%+v\n", tok)
-        }
-        */
     }
 }
 

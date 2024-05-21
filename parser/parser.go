@@ -26,9 +26,7 @@ const (
 
 var precedences = map[token.TokenType]int{
 	token.EQ:       EQUALS,
-	token.NOT_EQ:   EQUALS,
 	token.LT:       LESSGREATER,
-	token.GT:       LESSGREATER,
 	token.PLUS:     SUM,
 	token.MINUS:    SUM,
 	token.ASTERISK: PRODUCT,
@@ -54,7 +52,9 @@ func New(l *lexer.Lexer) *Parser {
 	p.prefixParseFns = make(map[token.TokenType]prefixParseFn)
 	p.registerPrefix(token.IDENT, p.parseIdentifier)
 	p.registerPrefix(token.INT, p.parseIntegerLiteral)
-	p.registerPrefix(token.BANG, p.parsePrefixExpression)
+	p.registerPrefix(token.NOT, p.parsePrefixExpression)
+    p.registerPrefix(token.TRUE, p.parseBoolean)
+    p.registerPrefix(token.FALSE, p.parseBoolean)
 	p.registerPrefix(token.MINUS, p.parsePrefixExpression)
 	p.registerPrefix(token.IF, p.parseIfExpression)
 	p.registerPrefix(token.WHILE, p.parseWhileExpression)
@@ -64,9 +64,7 @@ func New(l *lexer.Lexer) *Parser {
 	p.registerInfix(token.MINUS, p.parseInfixExpression)
 	p.registerInfix(token.ASTERISK, p.parseInfixExpression)
 	p.registerInfix(token.EQ, p.parseInfixExpression)
-	p.registerInfix(token.NOT_EQ, p.parseInfixExpression)
 	p.registerInfix(token.LT, p.parseInfixExpression)
-	p.registerInfix(token.GT, p.parseInfixExpression)
 
 	// Reads two tokens so curToken and peekToken are set
 	p.nextToken()
@@ -247,6 +245,10 @@ func (p *Parser) parseInfixExpression(left ast.Expression) ast.Expression {
 	expression.Right = p.parseExpression(precedence)
 
 	return expression
+}
+
+func (p *Parser) parseBoolean() ast.Expression {
+	return &ast.Boolean{Token: p.curToken, Value: p.curTokenIs(token.TRUE)}
 }
 
 func (p *Parser) noPrefixParseFnError(t token.TokenType) {
