@@ -1,10 +1,9 @@
 # While Language Parser
 
-## How to run locally
-<ol>
-    <li>Run `cd frontend`</li>
-    <li>Run `npm i`</li>
-    <li>In another terminal run `cd ../; go run main.go`</li>
-</ol>
-
-### You should now have the frontend running locally in `http://localhost:5173` and the backend running in `http://localhost:6969`
+## Running it locally
+First make sure to have node or nvm installed on your local machine. See [NVM Installation Guide](https://www.freecodecamp.org/news/node-version-manager-nvm-install-guide/) or [Node Installation Guide](https://nodejs.org/en/download) for more info.
+- Run `cd frontend` then `npm i` then run `npm run dev` to start frontend locally.
+- In another terminal, go to root directory of project and run `go run main.go` 
+- *Now you have the project running locally!*
+- `https://localhost:5173` for frontend 
+- `https://localhost:6969` for backend 
