@@ -3,7 +3,7 @@
 ## How to run locally
 <ol>
     <li>Run `cd frontend`</li>
-    <li>Run `npm i`</li>j
+    <li>Run `npm i`</li>
     <li>In another terminal run `cd ../; go run main.go`</li>
 </ol>
 
