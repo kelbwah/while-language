@@ -12,6 +12,7 @@ const (
     NULL_OBJ = "NULL"
     ERROR_OBJ = "ERROR"
     VARIABLE_NAME_OBJECT = "VAR_NAME"
+    STRING_RESULT_OBJECT = "STRING_RESULT"
 )
 
 type Object interface {
@@ -31,6 +32,10 @@ type VariableName struct {
     Value string
 }
 
+type StringResult struct {
+    Value string
+}
+
 type Error struct {
     Message string 
 }
@@ -42,6 +47,9 @@ func (i *Integer) Type() ObjectType { return INTEGER_OBJ }
 
 func (v *VariableName) Inspect() string { return fmt.Sprintf("%s", v.Value) }
 func (v *VariableName) Type() ObjectType { return VARIABLE_NAME_OBJECT }
+
+func (s *StringResult) Inspect() string { return fmt.Sprintf("%s", s.Value) }
+func (s *StringResult) Type() ObjectType { return STRING_RESULT_OBJECT }
 
 func (b *Boolean) Inspect() string { return fmt.Sprintf("%t", b.Value) }
 func (b *Boolean) Type() ObjectType { return BOOLEAN_OBJ }

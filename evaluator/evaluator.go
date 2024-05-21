@@ -209,20 +209,29 @@ func evalIfExpression(ie *ast.IfExpression, env *object.Environment) object.Obje
 }
 
 func evalWhileExpression(ie *ast.WhileExpression, env *object.Environment) object.Object {
+    var output string
     condition := Eval(ie.Condition, env)
-    var result object.Object
+    
     if isError(condition) {
         return condition
     }
     
     for isTruthy(condition) {
-        result = Eval(ie.Consequence, env)
+        result := Eval(ie.Consequence, env)
+        if isError(result) {
+            return result 
+        }
+        if result != NULL {
+            output += result.Inspect() + "\n"
+        }
         condition = Eval(ie.Condition, env)
+        if isError(condition) {
+            return condition
+        }
     } 
 
-    return result
+    return &object.StringResult{Value: output}
 }
-
 
 func evalIdentifier(node *ast.Identifier, env *object.Environment) object.Object {
     val, ok := env.Get(node.Value)
