@@ -31,15 +31,13 @@ const (
 
     EQ     = "=="
 
-    NOT = "NOT"
-    AND = "AND"
-    OR  = "OR"
-
+    NOT   = "NOT"
+    AND   = "AND"
+    OR    = "OR"
     IF    = "IF"
     ELSE  = "ELSE"
     WHILE = "WHILE"
     FOR   = "FOR"
-
     TRUE  = "TRUE"
     FALSE = "FALSE"
 )
@@ -48,7 +46,6 @@ const (
 var whileToGoTokens = map[TokenType]TokenType{
     WHILE:  FOR,
     AND:    AND,
-    OR:     OR,
     NOT:    NOT, 
 }
 
@@ -56,11 +53,11 @@ var keywords = map[string]TokenType{
     "while":  WHILE,
     "if":     IF, 
     "else":   ELSE,
-    "or":     OR,
-    "and":    AND,
     "not":    NOT,
     "for":    FOR,
     "true":   TRUE,
+    "or":     OR,
+    "and":    AND,
     "false":  FALSE,
 }
 

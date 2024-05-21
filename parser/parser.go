@@ -14,8 +14,10 @@ type (
 )
 
 const (
-	_ int = iota
-	LOWEST
+	_ int = iota 
+    LOWEST
+    ASSIGNMENT
+    AND_OR
 	EQUALS
 	LESSGREATER
 	SUM
@@ -25,7 +27,10 @@ const (
 )
 
 var precedences = map[token.TokenType]int{
+    token.ASSIGN:   ASSIGNMENT,
 	token.EQ:       EQUALS,
+    token.OR:       AND_OR,
+    token.AND:      AND_OR,
 	token.LT:       LESSGREATER,
 	token.PLUS:     SUM,
 	token.MINUS:    SUM,
@@ -65,6 +70,9 @@ func New(l *lexer.Lexer) *Parser {
 	p.registerInfix(token.ASTERISK, p.parseInfixExpression)
 	p.registerInfix(token.EQ, p.parseInfixExpression)
 	p.registerInfix(token.LT, p.parseInfixExpression)
+	p.registerInfix(token.OR, p.parseInfixExpression)
+    p.registerInfix(token.AND, p.parseInfixExpression)
+    p.registerInfix(token.ASSIGN, p.parseInfixExpression)
 
 	// Reads two tokens so curToken and peekToken are set
 	p.nextToken()
@@ -238,7 +246,8 @@ func (p *Parser) parseInfixExpression(left ast.Expression) ast.Expression {
 	expression := &ast.InfixExpression{
 		Token:    p.curToken,
 		Operator: p.curToken.Literal,
-		Left:     left, }
+		Left:     left, 
+    }
 
 	precedence := p.curPrecedence()
 	p.nextToken()
